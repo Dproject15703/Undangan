@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan</title>
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        /* Hanya tampilkan slider di perangkat mobile */
+        @media (min-width: 768px) {
+            .swiper {
+                display: none;
+            }
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Gaya untuk tombol musik */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0.7; 
+            transition: opacity 0.3s ease;
+        }
+
+        .music-control img {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Sembunyikan tombol navigasi slider */
+        .swiper-button-next,
+        .swiper-button-prev {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Slider Container -->
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="img/1.png" alt="Foto 1"></div>
+            <div class="swiper-slide"><img src="img/2.jpg" alt="Foto 2"></div>
+        </div>
+        <!-- Navigasi -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Audio Player -->
+    <audio id="background-music" loop autoplay>
+        <source src="sound/Sinarengan (feat. Bella Bonita).mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <!-- Tombol Musik -->
+    <div class="music-control" id="music-control">
+        <img src="img/play-buttton.png" alt="Play" id="music-icon">
+    </div>
+
+    <!-- Swiper.js Script -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        // Inisialisasi Swiper
+        const swiper = new Swiper('.swiper', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+        // Kontrol Musik
+        const music = document.getElementById('background-music');
+        const musicControl = document.getElementById('music-control');
+        const musicIcon = document.getElementById('music-icon');
+
+        let isPlaying = true;
+
+        window.addEventListener('load', () => {
+            music.play().catch(error => {
+                console.log('Autoplay diblokir oleh browser:', error);
+            });
+        });
+
+        musicControl.addEventListener('click', () => {
+            if (isPlaying) {
+                music.pause();
+                musicIcon.src = 'img/play-buttton.png'; // Ganti dengan ikon play
+            } else {
+                music.play();
+                musicIcon.src = 'img/pause.png'; // Ganti dengan ikon pause
+            }
+            isPlaying = !isPlaying;
+        });
+    </script>
+</body>
+</html>
